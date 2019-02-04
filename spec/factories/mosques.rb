@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :mosque do
-    name { "MyString" }
-    publiclyAccessible { "" }
+    name { Faker::StarWars.character }
+    publiclyAccessible false
   end
 end
