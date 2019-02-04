@@ -1,0 +1,2 @@
+class Mosque < ApplicationRecord
+end
