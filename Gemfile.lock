@@ -52,11 +52,11 @@ GEM
     database_cleaner (1.7.0)
     diff-lcs (1.3)
     erubi (1.8.0)
-    factory_bot (5.0.0)
-      activesupport (>= 4.2.0)
-    factory_bot_rails (5.0.0)
-      factory_bot (~> 5.0.0)
-      railties (>= 4.2.0)
+    factory_bot (4.11.1)
+      activesupport (>= 3.0.0)
+    factory_bot_rails (4.11.1)
+      factory_bot (~> 4.11.1)
+      railties (>= 3.0.0)
     faker (1.9.1)
       i18n (>= 0.7)
     ffi (1.10.0)
@@ -134,6 +134,10 @@ GEM
       rspec-support (~> 3.8.0)
     rspec-support (3.8.0)
     ruby_dep (1.5.0)
+    shoulda (3.6.0)
+      shoulda-context (~> 1.0, >= 1.0.1)
+      shoulda-matchers (~> 3.0)
+    shoulda-context (1.2.2)
     shoulda-matchers (3.1.3)
       activesupport (>= 4.0.0)
     spring (2.0.2)
@@ -164,12 +168,13 @@ DEPENDENCIES
   bootsnap (>= 1.1.0)
   byebug
   database_cleaner
-  factory_bot_rails
+  factory_bot_rails (~> 4.0)
   faker
   listen (>= 3.0.5, < 3.2)
   puma (~> 3.11)
   rails (~> 5.2.2)
-  rspec-rails
+  rspec-rails (~> 3.5)
+  shoulda
   shoulda-matchers
   spring
   spring-watcher-listen (~> 2.0.0)

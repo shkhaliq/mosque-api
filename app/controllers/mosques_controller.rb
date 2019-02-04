@@ -1,0 +1,2 @@
+class MosquesController < ApplicationController
+end
