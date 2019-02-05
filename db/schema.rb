@@ -14,7 +14,7 @@ ActiveRecord::Schema.define(version: 2019_02_04_040115) do
 
   create_table "mosques", force: :cascade do |t|
     t.string "name"
-    t.boolean "publiclyAccessible"
+    t.boolean "publicly_accessible"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

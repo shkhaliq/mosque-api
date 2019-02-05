@@ -1,7 +1,7 @@
 FactoryBot.define do
   factory :salah do
-    name { "MyString" }
-    begins { "" }
+    name { Faker::StarWars.character }
+    begins { Faker::StarWars.character }
     iqamah { "" }
     mosque { nil }
   end
