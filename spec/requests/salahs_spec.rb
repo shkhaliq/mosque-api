@@ -84,6 +84,28 @@ RSpec.describe 'Salahs API' do
         expect(response.body).to match(/Validation failed: Name can't be blank/)
       end
     end
+
+    context 'when a duplicate name request' do
+      before {  post "/mosques/#{mosque_id}/salahs", params: { name: 'Fajr', iqamah: "19840207T123456-0500" }  }
+      before {  post "/mosques/#{mosque_id}/salahs", params: { name: 'Fajr', iqamah: "19840207213456-0500" }  }
+
+      it 'returns status code 422' do
+        expect(response).to have_http_status(422)
+      end
+
+      it 'returns a failure message' do
+        expect(response.body).to match(/Validation failed: Name has already been taken/)
+      end
+    end
+
+    context 'when a duplicate date request' do
+      before {  post "/mosques/#{mosque_id}/salahs", params: { name: 'Jummah 1', iqamah: "19840207T123456-0500" }  }
+      before {  post "/mosques/#{mosque_id}/salahs", params: { name: 'Jummah 2', iqamah: "19840207T123456-0500" }  }
+
+      it 'returns status code 201' do
+        expect(response).to have_http_status(201)
+      end
+    end
   end
 
   # Test suite for PUT /mosques/:mosque_id/salahs/:id
