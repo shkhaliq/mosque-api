@@ -10,13 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_02_04_040115) do
+ActiveRecord::Schema.define(version: 2019_02_07_143243) do
 
   create_table "mosques", force: :cascade do |t|
     t.string "name"
     t.boolean "publicly_accessible"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "website_url"
   end
 
   create_table "salahs", force: :cascade do |t|

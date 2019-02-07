@@ -34,7 +34,7 @@ class MosquesController < ApplicationController
 
   def mosque_params
     # whitelist params
-    params.permit(:name, :publicly_accessible)
+    params.permit(:name, :publicly_accessible, :website_url)
   end
 
   def set_mosque

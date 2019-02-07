@@ -66,6 +66,29 @@ RSpec.describe 'Mosques API', type: :request do
       end
     end
 
+    context 'when all params are POSTed' do
+      let (:all_attributes) { { name: 'MyMosque', publicly_accessible: true, website_url: 'https://mymosque.com' } }
+
+      before { post '/mosques', params: all_attributes }
+
+      it 'creates a mosque' do
+        expect(json['name']).to eq('MyMosque')
+      end
+
+      it 'sets the publicly_accessible attribute' do
+        expect(json['publicly_accessible']).to eq(true)
+      end
+
+      it 'sets the website_url attribute' do
+        expect(json['website_url']).to eq("https://mymosque.com")
+      end
+
+      it 'returns status code 201' do
+        expect(response).to have_http_status(201)
+      end
+    end
+
+
     context 'when the request is invalid' do
       before { post '/mosques', params: { name: '' } }
 
