@@ -21,8 +21,8 @@ ActiveRecord::Schema.define(version: 2019_02_04_040115) do
 
   create_table "salahs", force: :cascade do |t|
     t.string "name"
-    t.date "begins"
-    t.date "iqamah"
+    t.datetime "begins"
+    t.datetime "iqamah"
     t.integer "mosque_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
