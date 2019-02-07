@@ -1,7 +1,7 @@
 FactoryBot.define do
   factory :salah do
     name { Faker::Name.unique.name }
-    begins { Faker::StarWars.character }
+    begins { Faker::Date.between(1.days.ago, Date.today) }
     iqamah { Faker::Date.between(2.days.ago, Date.today) }
     mosque { nil }
   end
