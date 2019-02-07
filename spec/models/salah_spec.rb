@@ -7,4 +7,6 @@ RSpec.describe Salah, type: :model do
   # Validation test
   # ensure column name is present before saving
   it { should validate_presence_of(:name) }
+
+  it { should validate_presence_of(:iqamah) }
 end

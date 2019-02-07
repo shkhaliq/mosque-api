@@ -33,7 +33,7 @@ class SalahsController < ApplicationController
   private
 
   def salah_params
-    params.permit(:name)
+    params.permit(:name, :iqamah)
   end
 
   def set_mosque

@@ -63,7 +63,7 @@ RSpec.describe 'Salahs API' do
 
   # Test suite for PUT /mosques/:mosque_id/salahs
   describe 'POST /mosques/:mosque_id/salahs' do
-    let(:valid_attributes) { { name: 'Visit Narnia', done: false } }
+    let(:valid_attributes) { { name: 'Visit Narnia', iqamah: "19840207T123456-0500" } }
 
     context 'when request attributes are valid' do
       before { post "/mosques/#{mosque_id}/salahs", params: valid_attributes }
@@ -88,7 +88,7 @@ RSpec.describe 'Salahs API' do
 
   # Test suite for PUT /mosques/:mosque_id/salahs/:id
   describe 'PUT /mosques/:mosque_id/salahs/:id' do
-    let(:valid_attributes) { { name: 'Mozart' } }
+    let(:valid_attributes) { { name: 'Zuhr' } }
 
     before { put "/mosques/#{mosque_id}/salahs/#{id}", params: valid_attributes }
 
@@ -99,7 +99,7 @@ RSpec.describe 'Salahs API' do
 
       it 'updates the salah' do
         updated_salah = Salah.find(id)
-        expect(updated_salah.name).to match(/Mozart/)
+        expect(updated_salah.name).to match(/Zuhr/)
       end
     end
 
