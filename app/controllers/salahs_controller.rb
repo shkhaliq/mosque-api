@@ -2,6 +2,8 @@ class SalahsController < ApplicationController
   before_action :set_mosque
   before_action :set_mosque_salah, only: [:show, :update, :destroy]
 
+  skip_before_action :authorize_request, only: [:index, :show]
+  
   # GET /mosques/:mosque_id/salahs
   def index
     json_response(@mosque.salahs)

@@ -2,10 +2,12 @@ require 'rails_helper'
 
 RSpec.describe 'Salahs API' do
   # Initialize the test data
+  let(:user) { create(:user) }
   let!(:mosque) { create(:mosque) }
   let!(:salahs) { create_list(:salah, 20, mosque_id: mosque.id) }
   let(:mosque_id) { mosque.id }
   let(:id) { salahs.first.id }
+  let(:headers) { valid_headers }
 
   # Test suite for GET /mosques/:mosque_id/salahs
   describe 'GET /mosques/:mosque_id/salahs' do
@@ -63,10 +65,12 @@ RSpec.describe 'Salahs API' do
 
   # Test suite for PUT /mosques/:mosque_id/salahs
   describe 'POST /mosques/:mosque_id/salahs' do
-    let(:valid_attributes) { { name: 'Visit Narnia', iqamah: "19840207T123456-0500" } }
+    let(:valid_attributes) do
+      { name: 'Visit Narnia', iqamah: "19840207T123456-0500" }.to_json 
+    end
 
     context 'when request attributes are valid' do
-      before { post "/mosques/#{mosque_id}/salahs", params: valid_attributes }
+      before { post "/mosques/#{mosque_id}/salahs", params: valid_attributes, headers: headers }
 
       it 'returns status code 201' do
         expect(response).to have_http_status(201)
@@ -74,7 +78,7 @@ RSpec.describe 'Salahs API' do
     end
 
     context 'when an invalid request' do
-      before { post "/mosques/#{mosque_id}/salahs", params: {} }
+      before { post "/mosques/#{mosque_id}/salahs", params: {}, headers: headers }
 
       it 'returns status code 422' do
         expect(response).to have_http_status(422)
@@ -86,8 +90,8 @@ RSpec.describe 'Salahs API' do
     end
 
     context 'when a duplicate name request' do
-      before {  post "/mosques/#{mosque_id}/salahs", params: { name: 'Fajr', iqamah: "19840207T123456-0500" }  }
-      before {  post "/mosques/#{mosque_id}/salahs", params: { name: 'Fajr', iqamah: "19840207213456-0500" }  }
+      before {  post "/mosques/#{mosque_id}/salahs", params: { name: 'Fajr', iqamah: '19840207T123456-0500' }.to_json, headers: headers  }
+      before {  post "/mosques/#{mosque_id}/salahs", params: { name: 'Fajr', iqamah: '19840207213456-0500' }.to_json, headers: headers  }
 
       it 'returns status code 422' do
         expect(response).to have_http_status(422)
@@ -99,8 +103,8 @@ RSpec.describe 'Salahs API' do
     end
 
     context 'when a duplicate date request' do
-      before {  post "/mosques/#{mosque_id}/salahs", params: { name: 'Jummah 1', iqamah: "19840207T123456-0500" }  }
-      before {  post "/mosques/#{mosque_id}/salahs", params: { name: 'Jummah 2', iqamah: "19840207T123456-0500" }  }
+      before {  post "/mosques/#{mosque_id}/salahs", params: { name: 'Jummah 1', iqamah: '19840207T123456-0500' }.to_json, headers: headers  }
+      before {  post "/mosques/#{mosque_id}/salahs", params: { name: 'Jummah 2', iqamah: '19840207T123456-0500' }.to_json, headers: headers  }
 
       it 'returns status code 201' do
         expect(response).to have_http_status(201)
@@ -110,9 +114,12 @@ RSpec.describe 'Salahs API' do
 
   # Test suite for PUT /mosques/:mosque_id/salahs/:id
   describe 'PUT /mosques/:mosque_id/salahs/:id' do
-    let(:valid_attributes) { { name: 'Zuhr' } }
+     let(:valid_attributes) do
+      # send json payload
+      { name: 'Zuhr' }.to_json
+    end
 
-    before { put "/mosques/#{mosque_id}/salahs/#{id}", params: valid_attributes }
+    before { put "/mosques/#{mosque_id}/salahs/#{id}", params: valid_attributes, headers: headers }
 
     context 'when salah exists' do
       it 'returns status code 204' do
@@ -140,7 +147,7 @@ RSpec.describe 'Salahs API' do
 
   # Test suite for DELETE /mosques/:id
   describe 'DELETE /mosques/:id' do
-    before { delete "/mosques/#{mosque_id}/salahs/#{id}" }
+    before { delete "/mosques/#{mosque_id}/salahs/#{id}", headers: headers }
 
     it 'returns status code 204' do
       expect(response).to have_http_status(204)
