@@ -1,6 +1,11 @@
 class JsonWebToken
   # secret to encode and decode token
-  HMAC_SECRET = MosqueApi::Application.credentials.secret_key_base
+  if Rails.env.test?
+    HMAC_SECRET = 'mySecr$t Key'
+  else
+    HMAC_SECRET = MosqueApi::Application.credentials.secret_key_base
+  end
+
 
   def self.encode(payload, exp = 24.hours.from_now)
     # set expiry to 24 hours from creation time
