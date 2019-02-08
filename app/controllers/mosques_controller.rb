@@ -1,6 +1,8 @@
 class MosquesController < ApplicationController
   before_action :set_mosque, only: [:show, :update, :destroy]
 
+  skip_before_action :authorize_request, only: [:index, :show]
+
   # GET /mosques
   def index
     @mosques = Mosque.all

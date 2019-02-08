@@ -2,9 +2,11 @@ require 'rails_helper'
 
 RSpec.describe 'Mosques API', type: :request do
   # initialize test data 
+  let(:user) { create(:user) }
   let!(:mosques) { create_list(:mosque, 10) }
   let(:mosque_id) { mosques.first.id }
-
+  let(:headers) { valid_headers }
+  
   # Test suite for GET /mosques
   describe 'GET /mosques' do
     # make HTTP get request before each example
@@ -52,10 +54,12 @@ RSpec.describe 'Mosques API', type: :request do
   # Test suite for POST /mosques
   describe 'POST /mosques' do
     # valid payload
-    let(:valid_attributes) { { name: 'Baitul Mukarram' } }
+    let(:valid_attributes) do
+      { name: 'Baitul Mukarram' }.to_json
+    end
 
     context 'when the request is valid' do
-      before { post '/mosques', params: valid_attributes }
+      before { post '/mosques', params: valid_attributes, headers: headers }
 
       it 'creates a mosque' do
         expect(json['name']).to eq('Baitul Mukarram')
@@ -67,9 +71,11 @@ RSpec.describe 'Mosques API', type: :request do
     end
 
     context 'when all params are POSTed' do
-      let (:all_attributes) { { name: 'MyMosque', publicly_accessible: true, website_url: 'https://mymosque.com' } }
+      let (:all_attributes) do
+        { name: 'MyMosque', publicly_accessible: true, website_url: 'https://mymosque.com' }.to_json
+      end
 
-      before { post '/mosques', params: all_attributes }
+      before { post '/mosques', params: all_attributes, headers: headers }
 
       it 'creates a mosque' do
         expect(json['name']).to eq('MyMosque')
@@ -90,7 +96,7 @@ RSpec.describe 'Mosques API', type: :request do
 
 
     context 'when the request is invalid' do
-      before { post '/mosques', params: { name: '' } }
+      before { post '/mosques', params: { name: '' }.to_json, headers: headers }
 
       it 'returns status code 422' do
         expect(response).to have_http_status(422)
@@ -105,10 +111,10 @@ RSpec.describe 'Mosques API', type: :request do
 
   # Test suite for PUT /mosques/:id
   describe 'PUT /mosques/:id' do
-    let(:valid_attributes) { { name: 'SomeMosque' } }
+    let(:valid_attributes) { { name: 'SomeMosque' }.to_json }
 
     context 'when the record exists' do
-      before { put "/mosques/#{mosque_id}", params: valid_attributes }
+      before { put "/mosques/#{mosque_id}", params: valid_attributes, headers: headers }
 
       it 'updates the record' do
         expect(response.body).to be_empty
@@ -122,7 +128,7 @@ RSpec.describe 'Mosques API', type: :request do
 
   # Test suite for DELETE /mosques/:id
   describe 'DELETE /mosques/:id' do
-    before { delete "/mosques/#{mosque_id}" }
+    before { delete "/mosques/#{mosque_id}", headers: headers }
 
     it 'returns status code 204' do
       expect(response).to have_http_status(204)
